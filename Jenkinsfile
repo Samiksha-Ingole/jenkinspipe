@@ -7,13 +7,26 @@ pipeline {
     }
 
     stages {
-        stage{
-            stage('Test'){
-                steps{
-                    input 'do u want to proceed?'
-                }
-            }
-        }
+		stage ('Test'){
+			steps{
+				input 'Do you want to proceed?'
+			}
+		}
+	stage ('pre-build'){
+			parallel{
+				stage ('unittest'){
+					steps{
+						echo 'I am in Unit Testing Phase....'
+					}
+				}	
+				stage ('integrationtest'){
+					steps{
+						echo 'I am in Integration Testing Phase....'
+					}
+				}	
+			}
+		}
+	
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
